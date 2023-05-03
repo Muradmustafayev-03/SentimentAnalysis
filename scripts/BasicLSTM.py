@@ -1,6 +1,7 @@
 from typing import List
 from keras.models import Model, Sequential
-from keras.layers import LSTM, Bidirectional, Dense, Embedding, Dropout, BatchNormalization
+from keras.layers import Input, LSTM, Bidirectional, Dense
+from keras.layers import Embedding, Dropout, BatchNormalization
 from .constants import MAX_WORDS, MAX_TEXT_LEN, OUTPUT_SIZE
 
 
@@ -33,6 +34,7 @@ def build_unidirectional_lstm_model(
     EMBEDDING_SIZE, LSTM_SIZES = layers_sizes[0], layers_sizes[1:]
 
     model = Sequential()
+    model.add(Input(shape=(MAX_TEXT_LEN,)))
     model.add(Embedding(vocab_size, EMBEDDING_SIZE, input_length=max_length))
 
     for layer_size in LSTM_SIZES:
@@ -75,6 +77,7 @@ def build_bidirectional_lstm_model(
     EMBEDDING_SIZE, BIDIRECTIONAL_SIZES, UNIDIRECTIONAL_SIZE = layers_sizes[0], layers_sizes[1:-1], layers_sizes[-1]
 
     model = Sequential()
+    model.add(Input(shape=(MAX_TEXT_LEN,)))
     model.add(Embedding(vocab_size, EMBEDDING_SIZE, input_length=max_length))
 
     for layer_size in BIDIRECTIONAL_SIZES:
