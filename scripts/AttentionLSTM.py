@@ -40,7 +40,7 @@ def build_unidirectional_lstm_attention_model(
         output_size: int,
         dropout: float = 0.5,
         batch_normalization: bool = True,
-        activation='softmax'
+        activation='sigmoid'
 ) -> Model:
     """
     Builds a unidirectional LSTM model with the specified architecture and Attention mechanism.
@@ -87,7 +87,7 @@ def build_bidirectional_lstm_attention_model(
         output_size: int,
         dropout: float = 0.5,
         batch_normalization: bool = True,
-        activation='softmax'
+        activation='sigmoid'
 ) -> Model:
     """
     Builds a bidirectional LSTM model with the specified architecture and Attention mechanism.
@@ -125,3 +125,7 @@ def build_bidirectional_lstm_attention_model(
     model = Model(inputs=[input_layer], outputs=[output_layer])
 
     return model
+
+
+UnidirectionalLSTMAttention = build_unidirectional_lstm_attention_model(MAX_WORDS, MAX_TEXT_LEN, [64, 32, 16], OUTPUT_SIZE)
+BidirectionalLSTMAttention = build_bidirectional_lstm_attention_model(MAX_WORDS, MAX_TEXT_LEN, [64, 32, 16], OUTPUT_SIZE)
