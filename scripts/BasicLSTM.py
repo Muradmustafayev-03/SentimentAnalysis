@@ -37,11 +37,16 @@ def build_unidirectional_lstm_model(
     model.add(Input(shape=(MAX_TEXT_LEN,)))
     model.add(Embedding(vocab_size, EMBEDDING_SIZE, input_length=max_length))
 
-    for layer_size in LSTM_SIZES:
+    for layer_size in LSTM_SIZES[:-1]:
         model.add(LSTM(layer_size, return_sequences=True))
         model.add(Dropout(dropout))
         if batch_normalization:
             model.add(BatchNormalization())
+
+    model.add(LSTM(LSTM_SIZES[-1]))
+    model.add(Dropout(dropout))
+    if batch_normalization:
+        model.add(BatchNormalization())
 
     model.add(Dense(output_size, activation=activation))
 
