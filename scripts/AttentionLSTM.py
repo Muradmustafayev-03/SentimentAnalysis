@@ -48,8 +48,7 @@ def build_unidirectional_lstm_attention_model(
     Args:
         vocab_size: The size of the vocabulary.
         max_length: The maximum length of the input sequence.
-        layers_sizes: A tuple containing the embedding size, a list of sizes for the bidirectional layers,
-                      the size of the unidirectional layer, and the number of Attention units.
+        layers_sizes: A tuple containing the embedding size, a list of sizes.
         output_size: The size of the output layer.
         dropout: The dropout rate to use.
         batch_normalization: Whether to use batch normalization.
@@ -95,8 +94,7 @@ def build_bidirectional_lstm_attention_model(
     Args:
         vocab_size: The size of the vocabulary.
         max_length: The maximum length of the input sequence.
-        layers_sizes: A tuple containing the embedding size, a list of sizes for the bidirectional layers,
-                      the size of the unidirectional layer, and the number of Attention units.
+        layers_sizes: A tuple containing the embedding size, a list of sizes.
         output_size: The size of the output layer.
         dropout: The dropout rate to use.
         batch_normalization: Whether to use batch normalization.
