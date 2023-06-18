@@ -22,7 +22,7 @@ def test_on_examples(model: Model, tokenizer: Tokenizer):
     reverse_word_map = get_reverse_word_map(tokenizer)
     correct = 0
 
-    for example, emotion in TEST_EXAMPLES.items():
+    for example, emotion in EXAMPLES.items():
         tokens = tokenizer.texts_to_sequences([example])[0]
         restored_sentence = sequence_to_text(reverse_word_map, tokens)
         pad_tokens = pad_sequences([tokens], maxlen=MAX_TEXT_LEN)
