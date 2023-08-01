@@ -1,3 +1,5 @@
+import pandas as pd
+import numpy as np
 import spacy
 
 # run 'python -m spacy download en_core_web_sm' in the terminal before running this line
@@ -35,3 +37,12 @@ def filter_and_extract_lemma(text: str) -> str:
     doc = nlp(text)
     filtered = [token.lemma_ for token in doc if not token.is_stop and not token.is_punct]
     return ' '.join(filtered)
+
+
+def one_hot_encode(column: pd.Series) -> np.array:
+    """
+    Converts a data series of classes into one-hot encoded array
+    :param column: the data Series or DataFrame column to encode
+    :return: 2D array with encoded data
+    """
+    return np.array(pd.get_dummies(column))
