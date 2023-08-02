@@ -46,3 +46,14 @@ def one_hot_encode(column: pd.Series) -> np.array:
     :return: 2D array with encoded data
     """
     return np.array(pd.get_dummies(column))
+
+
+def one_hot_decode(encoded: np.array, classes: pd.Series) -> np.array:
+    """
+    Decodes one-hot encoded values according to existing classes
+    :param encoded: one-hot encoded numpy array, either from one_hot_encode function or from the model output
+    :param classes: classes column of the source dataset
+    :return: numpy array with the name of the class corresponding to each one-hot subarray
+    """
+    classes = sorted(classes.unique().tolist())
+    return np.array([classes[np.argmax(one_hot)] for one_hot in encoded])
