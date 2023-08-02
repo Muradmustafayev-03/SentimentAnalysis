@@ -2,8 +2,10 @@ import pandas as pd
 import numpy as np
 import spacy
 
-# run 'python -m spacy download en_core_web_sm' in the terminal before running this line
-nlp = spacy.load("en_core_web_sm")
+model_name = "en_core_web_sm"
+if model_name not in spacy.util.get_installed_models():
+    spacy.cli.download(model_name)
+nlp = spacy.load(model_name)
 
 
 def filter_tokens(text: str) -> str:
@@ -13,7 +15,7 @@ def filter_tokens(text: str) -> str:
     :return: text without punctuation and stop words
     """
     doc = nlp(text)
-    filtered = [token.text for token in doc if not token.is_stop and not token.is_punct]
+    filtered = [token.lower_ for token in doc if not token.is_stop and not token.is_punct]
     return ' '.join(filtered)
 
 
