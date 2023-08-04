@@ -11,13 +11,27 @@ nlp = spacy.load(model_name)
 
 
 class ExtendedTokenizer(Tokenizer):
+    """
+    Extended tokenizer with additional methods for converting texts to padded sequences and back.
+    """
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
 
     def texts_to_padded_sequences(self, texts, maxlen=None):
+        """
+        Convert texts to padded sequences.
+        :param texts: texts to vectorize
+        :param maxlen: maximum length of the sequences
+        :return: padded sequences
+        """
         return pad_sequences(self.texts_to_sequences(texts), maxlen=maxlen)
 
     def padded_sequences_to_text(self, sequences):
+        """
+        Convert padded sequences to texts.
+        :param sequences: sequences to convert
+        :return: texts
+        """
         cleared_sequences = [list(filter(lambda x: x != 0, row)) for row in sequences]
         return self.sequences_to_texts(cleared_sequences)
 
