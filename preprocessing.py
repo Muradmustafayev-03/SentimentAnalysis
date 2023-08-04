@@ -22,37 +22,47 @@ class ExtendedTokenizer(Tokenizer):
         return self.sequences_to_texts(cleared_sequences)
 
 
-def filter_tokens(text: str) -> str:
+def filter_tokens(text: str, join: bool = False) -> str or list:
     """
     Filter out punctuation and stop tokens.
     :param text: input text (sentence)
+    :param join: if True, return string, else return list of tokens
     :return: text without punctuation and stop words
     """
     doc = nlp(text)
     filtered = [token.lower_ for token in doc if not token.is_stop and not token.is_punct]
-    return ' '.join(filtered)
+    if join:
+        return ' '.join(filtered)
+    return filtered
 
 
-def extract_lemma(text: str) -> str:
+def extract_lemma(text: str, join: bool = False) -> str or list:
     """
     Extract lemma(base) from each word in the text.
     Example: feeling -> feel; pencils -> pencil; exhausted -> exhaust
     :param text: input text (sentence)
+    :param join: if True, return string, else return list of tokens
     :return: text with each word replaced to its base word
     """
     doc = nlp(text)
-    return ' '.join([token.lemma_ for token in doc])
+    ret = [token.lemma_ for token in doc]
+    if join:
+        return ' '.join(ret)
+    return ret
 
 
-def filter_and_extract_lemma(text: str) -> str:
+def filter_and_extract_lemma(text: str, join: bool = False) -> str or list:
     """
     Filter out punctuation and stop tokens and extract lemma(base) from each word in the text.
     :param text: input text (sentence)
+    :param join: if True, return string, else return list of tokens
     :return: text without punctuation and stop words and each word replaced to its base word
     """
     doc = nlp(text)
     filtered = [token.lemma_ for token in doc if not token.is_stop and not token.is_punct]
-    return ' '.join(filtered)
+    if join:
+        return ' '.join(filtered)
+    return filtered
 
 
 def one_hot_encode(column: pd.Series) -> np.array:
