@@ -1,5 +1,6 @@
 from keras.preprocessing.sequence import pad_sequences
 from keras.preprocessing.text import Tokenizer
+from gensim.models import Word2Vec
 import pandas as pd
 import numpy as np
 import spacy
@@ -14,6 +15,7 @@ class ExtendedTokenizer(Tokenizer):
     """
     Extended tokenizer with additional methods for converting texts to padded sequences and back.
     """
+
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
 
@@ -34,6 +36,25 @@ class ExtendedTokenizer(Tokenizer):
         """
         cleared_sequences = [list(filter(lambda x: x != 0, row)) for row in sequences]
         return self.sequences_to_texts(cleared_sequences)
+
+
+class Word2VecVectorizer(Word2Vec):
+    """
+    Extended Word2Vec model with additional methods.
+    """
+
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
+
+    def vectorize_sentence(self, sentence: str) -> np.ndarray:
+        vectorized = [self.wv[word] for word in sentence.split(' ') if word in self.wv]
+        if not vectorized:
+            # If none of the words are in the vocabulary, return zeros
+            vectorized = [np.zeros(self.vector_size)]
+        return np.mean(vectorized, axis=0)
+
+    def vectorize_sentences(self, sentences: pd.Series) -> np.ndarray:
+        return np.array([self.vectorize_sentence(sentence) for sentence in sentences.values])
 
 
 def filter_tokens(text: str, join: bool = False) -> str or list:
