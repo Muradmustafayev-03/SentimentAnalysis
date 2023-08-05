@@ -57,7 +57,7 @@ class Word2VecVectorizer(Word2Vec):
         return np.array([self.vectorize_sentence(sentence) for sentence in sentences.values])
 
 
-def filter_tokens(text: str, join: bool = False) -> str or list:
+def filter_tokens(text: str, join: bool = True) -> str or list:
     """
     Filter out punctuation and stop tokens.
     :param text: input text (sentence)
@@ -71,7 +71,7 @@ def filter_tokens(text: str, join: bool = False) -> str or list:
     return filtered
 
 
-def extract_lemma(text: str, join: bool = False) -> str or list:
+def extract_lemma(text: str, join: bool = True) -> str or list:
     """
     Extract lemma(base) from each word in the text.
     Example: feeling -> feel; pencils -> pencil; exhausted -> exhaust
@@ -86,7 +86,7 @@ def extract_lemma(text: str, join: bool = False) -> str or list:
     return ret
 
 
-def filter_and_extract_lemma(text: str, join: bool = False) -> str or list:
+def filter_and_extract_lemma(text: str, join: bool = True) -> str or list:
     """
     Filter out punctuation and stop tokens and extract lemma(base) from each word in the text.
     :param text: input text (sentence)
